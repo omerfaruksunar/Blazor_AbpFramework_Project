@@ -98,7 +98,7 @@ public class OnMuhasebeBlazorModule : AbpModule
 
             PreConfigure<OpenIddictServerBuilder>(serverBuilder =>
             {
-                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "d324b22d-6c06-413f-a851-f8d3128e4f10");
+                serverBuilder.AddProductionEncryptionAndSigningCertificate("openiddict.pfx", "a521d2b6-b3bf-4225-a86c-ed01700b1c26");
             });
         }
     }

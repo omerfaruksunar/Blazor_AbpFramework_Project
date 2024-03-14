@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbcYazilim.OnMuhasebe.Migrations
 {
     [DbContext(typeof(OnMuhasebeDbContext))]
-    [Migration("20240313123806_Initial")]
-    partial class Initial
+    [Migration("20240314105234_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
