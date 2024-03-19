@@ -7,6 +7,7 @@ public class Fatura : FullAuditedAggregateRoot<Guid>
 	public decimal BrutTutar { get; set; }
 	public decimal IndirimTutar { get; set; }
 	public decimal KdvHaricTutar { get; set; }
+	public decimal KdvTutar { get; set; }
 	public decimal NetTutar { get; set; }
 	public int HareketSayisi { get; set; }
 	public Guid CariId { get; set; }
