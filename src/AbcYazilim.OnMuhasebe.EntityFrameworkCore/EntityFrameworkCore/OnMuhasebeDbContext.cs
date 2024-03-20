@@ -122,5 +122,14 @@ public class OnMuhasebeDbContext :
 		builder.ConfigureDepo();
 		builder.ConfigureDonem();
 		builder.ConfigureFatura();
+		builder.ConfigureFaturaHareket();
+		builder.ConfigureFirmaParametre();
+		builder.ConfigureHizmet();
+		builder.ConfigureKasa();
+		builder.ConfigureMakbuz();
+		builder.ConfigureMasraf();
+		builder.ConfigureOzelKod();
+		builder.ConfigureStok();
+		builder.ConfigureSube();
 	}
 }
