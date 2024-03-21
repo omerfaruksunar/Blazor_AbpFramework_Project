@@ -1,5 +1,5 @@
 ﻿namespace AbcYazilim.OnMuhasebe.Kasalar;
-public class Kasa
+public class Kasa : FullAuditedAggregateRoot<Guid>
 {
 	public string Kod { get; set; }
 	public string Ad { get; set; }

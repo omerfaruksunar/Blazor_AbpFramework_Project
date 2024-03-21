@@ -1,5 +1,5 @@
 ﻿namespace AbcYazilim.OnMuhasebe.Makbuzlar;
-public class Makbuz : FullAuditedAggregateRoot<Makbuz>
+public class Makbuz : FullAuditedAggregateRoot<Guid>
 {
 	public MakbuzTuru MakbuzTuru { get; set; }
 	public string MakbuzNo { get; set; }
