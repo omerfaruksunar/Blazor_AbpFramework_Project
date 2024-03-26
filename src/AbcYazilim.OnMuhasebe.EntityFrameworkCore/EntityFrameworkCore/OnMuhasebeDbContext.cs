@@ -84,7 +84,7 @@ public class OnMuhasebeDbContext :
 	public DbSet<Fatura> Faturalar { get; set; }
 	public DbSet<Hizmet> Hizmetler { get; set; }
 	public DbSet<Kasa> Kasalar { get; set; }
-	public DbSet<Makbuz> Makbuzlar { get; set; }
+	public DbSet<EfCoreMakbuzRepository> Makbuzlar { get; set; }
 	public DbSet<Masraf> Masraflar { get; set; }
 	public DbSet<OzelKod> OzelKodlar { get; set; }
 	public DbSet<Stok> Stoklar { get; set; }
