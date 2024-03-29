@@ -1,4 +1,5 @@
-﻿using Volo.Abp.Application.Dtos;
+﻿using System;
+using Volo.Abp.Application.Dtos;
 
 namespace AbcYazilim.OnMuhasebe.Bankalar;
 public class ListBankaDto : EntityDto<Guid>

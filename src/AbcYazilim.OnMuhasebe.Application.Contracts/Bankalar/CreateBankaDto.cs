@@ -2,7 +2,7 @@
 using Volo.Abp.Application.Dtos;
 
 namespace AbcYazilim.OnMuhasebe.Bankalar;
-internal class CreateBankaDto : IEntityDto
+public class CreateBankaDto : IEntityDto
 {
 	public string Kod { get; set; }
 	public string Ad { get; set; }

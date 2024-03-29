@@ -83,7 +83,7 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 			.ToListAsync();
 	}
 	public async Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount,
-		Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null)
+		Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null )
 	{
 		var queryable = await WithDetailsAsync();
 		if (predicate != null)
@@ -146,6 +146,8 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 	public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate = null)
 	{
 		var dbSet = await GetDbSetAsync();
-		return predicate == null ?await dbSet.AnyAsync() : await dbSet.AnyAsync(predicate);
+		return predicate == null ?
+			await dbSet.AnyAsync() :
+			await dbSet.AnyAsync(predicate);
 	}
 }
