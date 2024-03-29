@@ -1,13 +1,14 @@
-﻿using AutoMapper;
+﻿using AbcYazilim.OnMuhasebe.Bankalar;
+using AutoMapper;
 
 namespace AbcYazilim.OnMuhasebe;
 
 public class OnMuhasebeApplicationAutoMapperProfile : Profile
 {
-    public OnMuhasebeApplicationAutoMapperProfile()
-    {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
-    }
+	public OnMuhasebeApplicationAutoMapperProfile()
+	{
+		//Olusturdugumuz maplemeleri buraya ekliyoruz.
+		CreateMap<Banka,SelectBankaDto>();
+		CreateMap<CreateBankaDto, Banka>();
+	}
 }
