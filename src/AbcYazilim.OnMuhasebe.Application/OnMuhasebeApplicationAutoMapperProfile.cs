@@ -9,6 +9,8 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 	{
 		//Olusturdugumuz maplemeleri buraya ekliyoruz.
 		CreateMap<Banka,SelectBankaDto>();
+		CreateMap<Banka,ListBankaDto>();
 		CreateMap<CreateBankaDto, Banka>();
+		CreateMap<UpdateBankaDto, Banka>();	
 	}
 }

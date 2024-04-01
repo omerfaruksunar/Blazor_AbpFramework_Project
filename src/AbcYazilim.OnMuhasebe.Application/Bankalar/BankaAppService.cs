@@ -1,7 +1,9 @@
 ﻿using AbcYazilim.OnMuhasebe.CommonDtos;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Repositories;
 
 namespace AbcYazilim.OnMuhasebe.Bankalar;
 public class BankaAppService : OnMuhasebeAppService, IBankaAppService
@@ -13,16 +15,22 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 		_bankaRepository = bankaRepository;
 	}
 
-	public async Task<SelectBankaDto> GetAsync(Guid id)
+	public virtual async Task<SelectBankaDto> GetAsync(Guid id)
 	{
 		var entity = await _bankaRepository.GetAsync(id,b=>b.Id==id );
 		return ObjectMapper.Map<Banka,SelectBankaDto>(entity);
 	}
-	public Task<PagedResultDto<ListBankaDto>> GetListAsync(BankaListParameterDto input)
+	public virtual async Task<PagedResultDto<ListBankaDto>> GetListAsync(BankaListParameterDto input)
 	{
-		throw new NotImplementedException();
+		var entities = await _bankaRepository.GetPagedListAsync(input.SkipCount,input.MaxResultCount,
+			b => b.Durum == input.Durum,	//predicate
+			b => b.Kod);	//orderBy
+		var totalCount=await _bankaRepository.CountAsync(b=>b.Durum == input.Durum);
+		return new PagedResultDto<ListBankaDto>(totalCount,
+			ObjectMapper.Map<List<Banka>, List < ListBankaDto >> (entities)
+			);
 	}
-	public async Task<SelectBankaDto> CreateAsync(CreateBankaDto input)
+	public virtual async Task<SelectBankaDto> CreateAsync(CreateBankaDto input)
 	{
 		//Sadece domain katmaninda tanimlamis oldugumuz entityleri db'ye 
 		//Gonderebildigimiz yani Dto'lari gonderemedigimiz icin Mapleme islemi yapiyoruz.
@@ -30,16 +38,21 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 		await _bankaRepository.InsertAsync(entity);
 		return ObjectMapper.Map<Banka,SelectBankaDto>(entity);
 	}
-	public Task<SelectBankaDto> UpdateAsync(Guid id, UpdateBankaDto input)
+	public virtual async Task<SelectBankaDto> UpdateAsync(Guid id, UpdateBankaDto input)
 	{
-		throw new NotImplementedException();
+		var entity = await _bankaRepository.GetAsync(id, b => b.Id == id);
+		var mappedEntity = ObjectMapper.Map(input, entity);
+		await _bankaRepository.UpdateAsync(mappedEntity);
+		return ObjectMapper.Map<Banka,SelectBankaDto>(mappedEntity);
 	}
-	public Task DeleteAsync(Guid id)
+	public virtual async Task DeleteAsync(Guid id)
 	{
-		throw new NotImplementedException();
+		//Hard delete islemi yapmayacak yani databasedeki veriyi silmeyecek saadece
+		//id'ye sahip olan entity'nin isDeleted property'sini true olarak isaretleyecek.
+		await _bankaRepository.DeleteAsync(id);
 	}
-	public Task<string> GetCodeAsync(CodeParameterDto getCodeInput)
+	public virtual async Task<string> GetCodeAsync(CodeParameterDto input)
 	{
-		throw new NotImplementedException();
+		return await _bankaRepository.GetCodeAsync(b=>b.Kod, b=>b.Durum == input.Durum);
 	}
 }
