@@ -4,6 +4,7 @@ using AbcYazilim.OnMuhasebe.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbcYazilim.OnMuhasebe.Migrations
 {
     [DbContext(typeof(OnMuhasebeDbContext))]
-    partial class OnMuhasebeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240403123448_AllowNullAciklama")]
+    partial class AllowNullAciklama
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
