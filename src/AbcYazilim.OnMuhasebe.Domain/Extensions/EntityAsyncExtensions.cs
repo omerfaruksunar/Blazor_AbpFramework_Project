@@ -15,6 +15,19 @@ public static class EntityAsyncExtensions
 			throw new DuplicateCodeException(kod);
 	}
 
+	public static async Task EntityAnyAsync<TEntity>(
+		this IReadOnlyRepository<TEntity> repository, object id, Expression<Func<TEntity, bool>>predicate, bool check = true)
+		where TEntity : class, IEntity
+	{
+		if (check && id != null)
+		{
+			var anyAsync = await repository.AnyAsync(predicate);
+
+			if (!anyAsync)
+				throw new EntityNotFoundException(typeof(TEntity), id);
+		}
+	}
+
 	public static async Task EntityAnyAsync(
 		this IReadOnlyRepository<OzelKod> repository, Guid? id, OzelKodTuru kodTuru,
 		KartTuru kartTuru, bool check = true)
