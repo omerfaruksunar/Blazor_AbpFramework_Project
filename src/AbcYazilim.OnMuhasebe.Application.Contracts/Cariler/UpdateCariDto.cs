@@ -8,7 +8,7 @@ public class UpdateCariDto : IEntityDto
 	public string Ad { get; set; }
 	public string VergiDairesi { get; set; }
 	public string VergiNo { get; set; }
-	public string Teledon { get; set; }
+	public string Telefon { get; set; }
 	public string Adres { get; set; }
 	public Guid? OzelKod1Id { get; set; }
 	public Guid? OzelKod2Id { get; set; }
