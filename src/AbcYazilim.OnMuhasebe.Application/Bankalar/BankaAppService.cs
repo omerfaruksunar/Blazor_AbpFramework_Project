@@ -19,6 +19,12 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 
 	public virtual async Task<SelectBankaDto> GetAsync(Guid id)
 	{
+		/*
+		 * predicate kisminda neleri tanımlayacağımıza şu şekilde karar veririz:
+		 * banka entity'sine gittigimizde include propertieslerin neler olduguna bakariz
+		 * banka icin baktigimizda OzelKod1 ve OzelKod2 İnclude Properties olarak tanimlanmistir yani
+		 * public  OzelKod OzelKod1 { get; set; } olarak tanımladigimiz kisim 
+		 */
 		var entity = await _bankaRepository.GetAsync(id, b => b.Id == id,
 			b => b.OzelKod1, b => b.OzelKod2);
 		return ObjectMapper.Map<Banka, SelectBankaDto>(entity);
@@ -36,10 +42,17 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 	}
 	public virtual async Task<SelectBankaDto> CreateAsync(CreateBankaDto input)
 	{
-		//kontrol yapiyoruz.
+		//Manager kullanarak kontrol islemi yapiyoruz.
 		await _bankaManager.CheckCreateAsync(input.Kod, input.OzelKod1Id, input.OzelKod2Id);
-		//Sadece domain katmaninda tanimlamis oldugumuz entityleri db'ye 
-		//Gonderebildigimiz yani Dto'lari gonderemedigimiz icin Mapleme islemi yapiyoruz.
+		/*
+		 * Sadece domain katmaninda tanimlamis oldugumuz entityleri db'ye 
+		 * Gonderebildigimiz yani Dto'lari gonderemedigimiz icin Mapleme islemi yapiyoruz.
+		*/
+		/*
+		 * Oncelikle UI'dan geleni mapliyoruz ve elimizde bir entity'miz oluyor.
+		 *Bunu InsertAsync ile db'ye gönderiyoruz. mapledigimiz data bir id aliyor.
+		 *İd alan entitymizi tekrar SelectBankaSubeDto olarak mapliyoruz.
+		*/
 		var entity = ObjectMapper.Map<CreateBankaDto, Banka>(input);
 		await _bankaRepository.InsertAsync(entity);
 		return ObjectMapper.Map<Banka, SelectBankaDto>(entity);
@@ -58,8 +71,8 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 	public virtual async Task DeleteAsync(Guid id)
 	{
 		await _bankaManager.CheckDeleteAsync(id);
-		//Hard delete islemi yapmayacak yani databasedeki veriyi silmeyecek saadece
-		//id'ye sahip olan entity'nin isDeleted property'sini true olarak isaretleyecek.
+		/*Hard delete islemi yapmayacak yani databasedeki veriyi silmeyecek saadece
+		id'ye sahip olan entity'nin isDeleted property'sini true olarak isaretleyecek.*/
 		await _bankaRepository.DeleteAsync(id);
 	}
 	public virtual async Task<string> GetCodeAsync(CodeParameterDto input)

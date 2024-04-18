@@ -1,6 +1,7 @@
 ﻿using AbcYazilim.OnMuhasebe.BankaHesaplar;
 using AbcYazilim.OnMuhasebe.Bankalar;
 using AbcYazilim.OnMuhasebe.BankaSubeler;
+using AbcYazilim.OnMuhasebe.Birimler;
 using AutoMapper;
 
 namespace AbcYazilim.OnMuhasebe;
@@ -51,5 +52,15 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad)); 
 		CreateMap<CreateBankaHesapDto, BankaHesap>();
 		CreateMap<UpdateBankaHesapDto, BankaHesap>();
+
+		//Birim
+		CreateMap<Birim, SelectBirimDto>()
+			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+		CreateMap<Birim,ListBirimDto>()
+			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+		CreateMap<CreateBirimDto, Birim>();
+		CreateMap<UpdateBirimDto, Birim>();
 	}
 }

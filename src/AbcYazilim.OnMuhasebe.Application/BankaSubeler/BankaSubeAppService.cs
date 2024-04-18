@@ -43,12 +43,8 @@ public class BankaSubeAppService : OnMuhasebeAppService, IBankaSubeAppService
 	}
 	public async Task<SelectBankaSubeDto> CreateAsync(CreateBankaSubeDto input)
 	{
-		//Manager islemleri
 		await _bankaSubeManager.CheckCreateAsync(input.Kod, input.BankaId,
 												 input.OzelKod1Id, input.OzelKod2Id);
-		//Oncelikle UI'dan geleni mapliyoruz ve elimizde bir entity'miz oluyor.
-		//Bunu InsertAsync ile db'ye gönderiyoruz. mapledigimiz data bir id aliyor.
-		//İd alan entitymizi tekrar SelectBankaSubeDto olarak mapliyoruz.
 		var entity = ObjectMapper.Map<CreateBankaSubeDto, BankaSube>(input);
 		await _bankaSubeRepository.InsertAsync(entity);
 		return ObjectMapper.Map<BankaSube, SelectBankaSubeDto>(entity);

@@ -20,12 +20,11 @@ public class BankaHesapAppService : OnMuhasebeAppService, IBankaHesapAppService
 
 	public virtual async Task<SelectBankaHesapDto> GetAsync(Guid id)
 	{
-		//Neleri include edecegimize bakmak icin SelectBankaHesapDto'ya bakiyoruz.
 		var entity = await _bankaHesapRepository.GetAsync(id, x => x.Id == id,
 			x => x.BankaSube, x => x.BankaSube.Banka, x => x.OzelKod1, x => x.OzelKod2);
 
 		var mappedDto = ObjectMapper.Map<BankaHesap, SelectBankaHesapDto>(entity);
-		//Enum localizing(Yerellestirme) islemi
+		//Enum localizing(Yerellestirme) islemi.
 		mappedDto.HesapTuruAdi = L[$"Enum:BankaHesapTuru:{(byte)mappedDto.HesapTuru}"];
 
 		return mappedDto;
