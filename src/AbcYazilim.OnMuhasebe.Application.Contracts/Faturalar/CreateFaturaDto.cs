@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AbcYazilim.OnMuhasebe.FaturaHareketler;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 
 namespace AbcYazilim.OnMuhasebe.Faturalar;
@@ -20,4 +23,5 @@ public class CreateFaturaDto : IEntityDto
 	public Guid? DonemId { get; set; }
 	public string Aciklama { get; set; }
 	public bool Durum { get; set; }
+	public ICollection<FaturaHareketDto> FaturaHareketler { get; set; }
 }

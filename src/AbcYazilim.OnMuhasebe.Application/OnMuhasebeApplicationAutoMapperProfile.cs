@@ -5,6 +5,8 @@ using AbcYazilim.OnMuhasebe.Birimler;
 using AbcYazilim.OnMuhasebe.Cariler;
 using AbcYazilim.OnMuhasebe.Depolar;
 using AbcYazilim.OnMuhasebe.Donemler;
+using AbcYazilim.OnMuhasebe.FaturaHareketler;
+using AbcYazilim.OnMuhasebe.Faturalar;
 using AutoMapper;
 
 namespace AbcYazilim.OnMuhasebe;
@@ -44,7 +46,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 		//BankaHesap
 		CreateMap<BankaHesap, SelectBankaHesapDto>()
 			.ForMember(x => x.BankaId, y => y.MapFrom(z => z.BankaSube.Banka.Id))
-			.ForMember(x=>x.BankaAdi,y=>y.MapFrom(z=>z.BankaSube.Banka.Ad))
+			.ForMember(x => x.BankaAdi, y => y.MapFrom(z => z.BankaSube.Banka.Ad))
 			.ForMember(x => x.BankaSubeAdi, y => y.MapFrom(z => z.BankaSube.Ad))
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
@@ -52,7 +54,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.BankaAdi, y => y.MapFrom(z => z.BankaSube.Banka.Ad))
 			.ForMember(x => x.BankaSubeAdi, y => y.MapFrom(z => z.BankaSube.Ad))
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
-			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad)); 
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
 		CreateMap<CreateBankaHesapDto, BankaHesap>();
 		CreateMap<UpdateBankaHesapDto, BankaHesap>();
 
@@ -60,7 +62,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 		CreateMap<Birim, SelectBirimDto>()
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
-		CreateMap<Birim,ListBirimDto>()
+		CreateMap<Birim, ListBirimDto>()
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
 		CreateMap<CreateBirimDto, Birim>();
@@ -91,5 +93,50 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 		CreateMap<Donem, ListDonemDto>();
 		CreateMap<CreateDonemDto, Donem>();
 		CreateMap<UpdateDonemDto, Donem>();
+
+		//Fatura
+		CreateMap<Fatura, SelectFaturaDto>()
+			.ForMember(x => x.CariAdi, y => y.MapFrom(z => z.Cari.Ad))
+			.ForMember(x => x.VergiDairesi, y => y.MapFrom(z => z.Cari.VergiDairesi))
+			.ForMember(x => x.VergiNo, y => y.MapFrom(z => z.Cari.VergiNo))
+			.ForMember(x => x.Adres, y => y.MapFrom(z => z.Cari.Adres))
+			.ForMember(x => x.Telefon, y => y.MapFrom(z => z.Cari.Telefon))
+			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+		CreateMap<Fatura, ListFaturaDto>()
+			.ForMember(x => x.CariAdi, y => y.MapFrom(z => z.Cari.Ad))
+			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+		CreateMap<CreateFaturaDto, Fatura>();
+		CreateMap<UpdateFaturaDto, Fatura>()
+			/*
+			 * Sadece uı'dan silinmiş olarak gönderilen hareketlerin isDeleted 
+			 * durumlarini true olarak ayarlamis olacak(ignore)
+			*/
+			.ForMember(x => x.FaturaHareketler, y => y.Ignore());
+
+		//Fatura Hareket
+		CreateMap<FaturaHareket, SelectFaturaHareketDto>()
+			.ForMember(x => x.StokKodu, y => y.MapFrom(z => z.Stok.Kod))
+			.ForMember(x => x.StokAdi, y => y.MapFrom(z => z.Stok.Ad))
+			.ForMember(x => x.HizmetKodu, y => y.MapFrom(z => z.Hizmet.Kod))
+			.ForMember(x => x.HizmetAdi, y => y.MapFrom(z => z.Hizmet.Ad))
+			.ForMember(x => x.MasrafKodu, y => y.MapFrom(z => z.Masraf.Kod))
+			.ForMember(x => x.MasrafAdi, y => y.MapFrom(z => z.Masraf.Ad))
+			.ForMember(x => x.DepoKodu, y => y.MapFrom(z => z.Depo.Kod))
+			.ForMember(x => x.DepoAdi, y => y.MapFrom(z => z.Depo.Ad))
+
+			.ForMember(x => x.BirimAdi, y => y.MapFrom(z => z.Stok != null ?
+							z.Stok.Birim.Ad : z.Hizmet != null ? z.Hizmet.Birim.Ad :
+							z.Masraf != null ? z.Masraf.Birim.Ad : null))
+			
+			.ForMember(x => x.HareketKodu, y => y.MapFrom(z => z.Stok != null ?
+							z.Stok.Kod : z.Hizmet != null ? z.Hizmet.Kod :
+							z.Masraf != null ? z.Masraf.Kod : null))
+
+			.ForMember(x => x.HareketAdi, y => y.MapFrom(z => z.Stok != null ?
+							z.Stok.Ad : z.Hizmet != null ? z.Hizmet.Ad :
+							z.Masraf != null ? z.Masraf.Ad : null));
+		CreateMap<FaturaHareketDto, FaturaHareket>();
 	}
 }
