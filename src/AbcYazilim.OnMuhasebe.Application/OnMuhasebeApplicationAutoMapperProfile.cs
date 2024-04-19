@@ -4,6 +4,7 @@ using AbcYazilim.OnMuhasebe.BankaSubeler;
 using AbcYazilim.OnMuhasebe.Birimler;
 using AbcYazilim.OnMuhasebe.Cariler;
 using AbcYazilim.OnMuhasebe.Depolar;
+using AbcYazilim.OnMuhasebe.Donemler;
 using AutoMapper;
 
 namespace AbcYazilim.OnMuhasebe;
@@ -84,5 +85,11 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
 		CreateMap<CreateDepoDto, Depo>();
 		CreateMap<UpdateDepoDto, Depo>();
+
+		//Donem
+		CreateMap<Donem, SelectDonemDto>();
+		CreateMap<Donem, ListDonemDto>();
+		CreateMap<CreateDonemDto, Donem>();
+		CreateMap<UpdateDonemDto, Donem>();
 	}
 }
