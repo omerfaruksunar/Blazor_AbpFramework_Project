@@ -15,6 +15,7 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 	public EfCoreCommonRepository(IDbContextProvider<OnMuhasebeDbContext> dbContextProvider)
 		: base(dbContextProvider) {}
 	public async Task<TEntity> GetAsync(object id, Expression<Func<TEntity, bool>> predicate = null,
+		//params yazilarak metoda liste sunulabilir
 		params Expression<Func<TEntity, object>>[] includeProperties)
 	{
 		//Datalari db'den getir ayrica navigation propertyleri dolu olarak getir demis olduk.(WithDetailsAsync)
@@ -24,10 +25,12 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 
 		if (predicate != null)
 		{
-			//queryable calistirilmayan sql sorgu kodu denilebilir ("Select*From ATable gibi)
-			//Biz bu queryable'a FirstOrDefault verdigimiz anda veya baska bir sey bu kod calisir
-			//Null gelme ihtimali oldugu icin FirstOrDefault Kullandık duruma gore farkli metodlar 
-			//da kullanilabilir.
+			/*
+			 * queryable calistirilmayan sql sorgu kodu denilebilir ("Select*From ATable gibi)
+			 *Biz bu queryable'a FirstOrDefault verdigimiz anda veya baska bir sey bu kod calisir
+			 *Null gelme ihtimali oldugu icin FirstOrDefault Kullandık duruma gore farkli metodlar 
+			 *da kullanilabilir.
+			*/
 			entity = await queryable.FirstOrDefaultAsync(predicate);
 			if (entity == null)
 				throw new EntityNotFoundException(typeof(TEntity), id);
@@ -39,8 +42,10 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 		return entity;
 	}
 
-	//Db'de gondermis oldugumuz id ye sahip bir entity bulunamadigi zaman hata mesajının verilmesini istemedigimiz
-	//durumlarda da bu metod kullanilir.
+	/*
+	 * Db'de gondermis oldugumuz id ye sahip bir entity bulunamadigi zaman hata mesajının verilmesini istemedigimiz
+	 * durumlarda da bu metod kullanilir.
+	*/
 	public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate = null,
 		params Expression<Func<TEntity, object>>[] includeProperties)
 	{

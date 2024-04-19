@@ -17,6 +17,7 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 		_bankaManager = bankaManager;
 	}
 
+	//Virtual olması sayesinde override edebiliyoruz.
 	public virtual async Task<SelectBankaDto> GetAsync(Guid id)
 	{
 		/*
@@ -29,8 +30,10 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 			b => b.OzelKod1, b => b.OzelKod2);
 		return ObjectMapper.Map<Banka, SelectBankaDto>(entity);
 	}
+	
 	public virtual async Task<PagedResultDto<ListBankaDto>> GetListAsync(BankaListParameterDto input)
 	{
+		var entity = await _bankaRepository.GetAsync(5);
 		var entities = await _bankaRepository.GetPagedListAsync(input.SkipCount, input.MaxResultCount,
 			b => b.Durum == input.Durum,    //predicate
 			b => b.Kod, //orderBy

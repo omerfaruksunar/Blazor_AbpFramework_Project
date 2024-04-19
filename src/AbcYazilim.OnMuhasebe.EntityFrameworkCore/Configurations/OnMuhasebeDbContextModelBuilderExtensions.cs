@@ -23,10 +23,13 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 namespace AbcYazilim.OnMuhasebe.Configurations;
 public static class OnMuhasebeDbContextModelBuilderExtensions
 {
+	//This ifadesi ile extend islemi yapilmaktadir.
 	public static void ConfigureBanka(this ModelBuilder builder)
 	{
+		//predicatelerde xyz abc disinda bir sey kullanmamak daha mantikli.
 		builder.Entity<Banka>(b =>
 		{
+			//Db'de app veya abp öntakısı alması için, prefix.
 			b.ToTable(OnMuhasebeConsts.DbTablePrefix + "Bankalar", OnMuhasebeConsts.DbSchema);
 			b.ConfigureByConvention();
 
