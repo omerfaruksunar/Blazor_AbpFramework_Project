@@ -43,6 +43,7 @@ using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using System.Text.Json.Serialization;
 
 namespace AbcYazilim.OnMuhasebe.Blazor;
 
@@ -118,7 +119,15 @@ public class OnMuhasebeBlazorModule : AbpModule
         ConfigureBlazorise(context);
         ConfigureRouter(context);
         ConfigureMenu(context);
+		ConfigureJson(context);
     }
+
+	private void ConfigureJson(ServiceConfigurationContext context)
+	{
+		context.Services.AddControllers()
+			.AddJsonOptions(x => x.JsonSerializerOptions
+			.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+	}
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
     {
