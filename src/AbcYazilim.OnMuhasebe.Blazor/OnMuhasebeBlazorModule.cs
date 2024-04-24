@@ -119,15 +119,16 @@ public class OnMuhasebeBlazorModule : AbpModule
         ConfigureBlazorise(context);
         ConfigureRouter(context);
         ConfigureMenu(context);
-		ConfigureJson(context);
+		//ConfigureJson(context);
     }
+	//Ýçiçe döngü hatasi icin yazilan metod.
 
-	private void ConfigureJson(ServiceConfigurationContext context)
-	{
-		context.Services.AddControllers()
-			.AddJsonOptions(x => x.JsonSerializerOptions
-			.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-	}
+	//private void ConfigureJson(ServiceConfigurationContext context)
+	//{
+	//	context.Services.AddControllers()
+	//		.AddJsonOptions(x => x.JsonSerializerOptions
+	//		.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+	//}
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
     {

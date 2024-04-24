@@ -8,6 +8,7 @@ using AbcYazilim.OnMuhasebe.Donemler;
 using AbcYazilim.OnMuhasebe.FaturaHareketler;
 using AbcYazilim.OnMuhasebe.Faturalar;
 using AutoMapper;
+using System.Linq;
 
 namespace AbcYazilim.OnMuhasebe;
 
@@ -84,7 +85,11 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
 		CreateMap<Depo, ListDepoDto>()
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
-			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad))
+			.ForMember(x => x.Giren, y => y.MapFrom(z => z.FaturaHareketler
+				.Where(x=>x.Fatura.FaturaTuru==FaturaTuru.Alis).Sum(x=>x.Miktar)))
+			.ForMember(x => x.Cikan, y => y.MapFrom(z => z.FaturaHareketler
+				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Satis).Sum(x => x.Miktar)));
 		CreateMap<CreateDepoDto, Depo>();
 		CreateMap<UpdateDepoDto, Depo>();
 

@@ -35,17 +35,10 @@ public class DepoAppService : OnMuhasebeAppService, IDepoAppService
 		var totalCount = await _depoRepository.CountAsync(x => x.SubeId == input.SubeId
 			&& x.Durum == input.Durum);
 
-		var mappedDtos=ObjectMapper.Map<List<Depo>,List<ListDepoDto>>(entities);
-
-		mappedDtos.ForEach(x =>
-		{
-			x.Giren = x.FaturaHareketler.Where(y => y.Fatura.FaturaTuru == FaturaTuru.Alis)
-				.Sum(y => y.Miktar);
-			x.Cikan= x.FaturaHareketler.Where(y=>y.Fatura.FaturaTuru==FaturaTuru.Satis)
-				.Sum(y=>y.Miktar);
-		});
-
-		return new PagedResultDto<ListDepoDto> (totalCount, mappedDtos);
+		return new PagedResultDto<ListDepoDto> (
+			totalCount,
+			ObjectMapper.Map<List<Depo>, List<ListDepoDto>>(entities)
+			);
 	}
 
 	public virtual async Task<SelectDepoDto> CreateAsync(CreateDepoDto input)
