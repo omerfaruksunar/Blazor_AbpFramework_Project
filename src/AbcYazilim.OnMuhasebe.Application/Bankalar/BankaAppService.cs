@@ -35,8 +35,16 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 	{
 		var entity = await _bankaRepository.GetAsync(5);
 		var entities = await _bankaRepository.GetPagedListAsync(input.SkipCount, input.MaxResultCount,
+			/*
+			 * predicate kısmının içeriginin ne olacagina BankaListParameterDto'ya
+			 * go to definition yaparak bakabiliriz.
+			 */
 			b => b.Durum == input.Durum,    //predicate
 			b => b.Kod, //orderBy
+			/*
+			 * İncludeProperties kısmının içeriginin ne olacagina Banka.cs'deki nesnelerden ulasiriz
+			 * public OzelKod OzelKod1{get;set;} gibi
+			 */
 			b => b.OzelKod1, b => b.OzelKod2);//include properties
 		var totalCount = await _bankaRepository.CountAsync(b => b.Durum == input.Durum);
 		return new PagedResultDto<ListBankaDto>(totalCount,
