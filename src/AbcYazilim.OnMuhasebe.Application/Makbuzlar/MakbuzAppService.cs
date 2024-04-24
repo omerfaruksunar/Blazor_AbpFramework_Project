@@ -97,7 +97,7 @@ public class MakbuzAppService : OnMuhasebeAppService, IMakbuzAppService
 	{
 		return await _makbuzRepository.GetCodeAsync(x=>x.MakbuzNo,
 			x=>x.MakbuzTuru==input.MakbuzTuru&&x.SubeId==input.SubeId&&
-			x.DonemId==input.DonemId&&x.Durum==input.Durum);
+			   x.DonemId==input.DonemId&&x.Durum==input.Durum);
 	}
 
 
