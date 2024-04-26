@@ -4,6 +4,7 @@ using AbcYazilim.OnMuhasebe.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbcYazilim.OnMuhasebe.Migrations
 {
     [DbContext(typeof(OnMuhasebeDbContext))]
-    partial class OnMuhasebeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240426111759_mig1")]
+    partial class mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1172,40 +1175,35 @@ namespace AbcYazilim.OnMuhasebe.Migrations
 
                     b.Property<string>("Aciklama")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AsilBorclu")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("BankaHesapId")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte>("BelgeDurumu")
-                        .HasColumnType("TinyInt");
+                    b.Property<int>("BelgeDurumu")
+                        .HasColumnType("int");
 
                     b.Property<string>("BelgeNo")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CekBankaId")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CekBankaSubeId")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CekHesapNo")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Ciranta")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
@@ -1230,10 +1228,10 @@ namespace AbcYazilim.OnMuhasebe.Migrations
                         .HasColumnName("IsDeleted");
 
                     b.Property<Guid?>("KasaId")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("KendiBelgemiz")
-                        .HasColumnType("Bit");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -1244,21 +1242,20 @@ namespace AbcYazilim.OnMuhasebe.Migrations
                         .HasColumnName("LastModifierId");
 
                     b.Property<Guid>("MakbuzId")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte>("OdemeTuru")
-                        .HasColumnType("TinyInt");
+                    b.Property<int>("OdemeTuru")
+                        .HasColumnType("int");
 
                     b.Property<string>("TakipNo")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Tutar")
-                        .HasColumnType("Money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Vade")
-                        .HasColumnType("Date");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -1272,9 +1269,7 @@ namespace AbcYazilim.OnMuhasebe.Migrations
 
                     b.HasIndex("MakbuzId");
 
-                    b.HasIndex("TakipNo");
-
-                    b.ToTable("AppMakbuzHareketler", (string)null);
+                    b.ToTable("MakbuzHareket");
                 });
 
             modelBuilder.Entity("AbcYazilim.OnMuhasebe.Masraflar.Masraf", b =>
@@ -3713,23 +3708,19 @@ namespace AbcYazilim.OnMuhasebe.Migrations
                 {
                     b.HasOne("AbcYazilim.OnMuhasebe.BankaHesaplar.BankaHesap", "BankaHesap")
                         .WithMany("MakbuzHareketler")
-                        .HasForeignKey("BankaHesapId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("BankaHesapId");
 
                     b.HasOne("AbcYazilim.OnMuhasebe.Bankalar.Banka", "CekBanka")
                         .WithMany("MakbuzHareketler")
-                        .HasForeignKey("CekBankaId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("CekBankaId");
 
                     b.HasOne("AbcYazilim.OnMuhasebe.BankaSubeler.BankaSube", "CekBankaSube")
                         .WithMany("MakbuzHareketler")
-                        .HasForeignKey("CekBankaSubeId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("CekBankaSubeId");
 
                     b.HasOne("AbcYazilim.OnMuhasebe.Kasalar.Kasa", "Kasa")
                         .WithMany("MakbuzHareketler")
-                        .HasForeignKey("KasaId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("KasaId");
 
                     b.HasOne("AbcYazilim.OnMuhasebe.Makbuzlar.Makbuz", "Makbuz")
                         .WithMany("MakbuzHareketler")

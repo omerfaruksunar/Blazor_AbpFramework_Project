@@ -33,7 +33,6 @@ public class BankaAppService : OnMuhasebeAppService, IBankaAppService
 	
 	public virtual async Task<PagedResultDto<ListBankaDto>> GetListAsync(BankaListParameterDto input)
 	{
-		var entity = await _bankaRepository.GetAsync(5);
 		var entities = await _bankaRepository.GetPagedListAsync(input.SkipCount, input.MaxResultCount,
 			/*
 			 * predicate kısmının içeriginin ne olacagina BankaListParameterDto'ya

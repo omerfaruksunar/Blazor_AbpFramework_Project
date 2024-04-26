@@ -91,7 +91,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad))
 			.ForMember(x => x.Giren, y => y.MapFrom(z => z.FaturaHareketler
-				.Where(x=>x.Fatura.FaturaTuru==FaturaTuru.Alis).Sum(x=>x.Miktar)))
+				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Alis).Sum(x => x.Miktar)))
 			.ForMember(x => x.Cikan, y => y.MapFrom(z => z.FaturaHareketler
 				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Satis).Sum(x => x.Miktar)));
 		CreateMap<CreateDepoDto, Depo>();
@@ -138,7 +138,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.BirimAdi, y => y.MapFrom(z => z.Stok != null ?
 							z.Stok.Birim.Ad : z.Hizmet != null ? z.Hizmet.Birim.Ad :
 							z.Masraf != null ? z.Masraf.Birim.Ad : null))
-			
+
 			.ForMember(x => x.HareketKodu, y => y.MapFrom(z => z.Stok != null ?
 							z.Stok.Kod : z.Hizmet != null ? z.Hizmet.Kod :
 							z.Masraf != null ? z.Masraf.Kod : null))
@@ -158,7 +158,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad))
 			.ForMember(x => x.Giren, y => y.MapFrom(z => z.FaturaHareketler
-				.Where(x=>x.Fatura.FaturaTuru==FaturaTuru.Alis).Sum(x=>x.Miktar)))
+				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Alis).Sum(x => x.Miktar)))
 			.ForMember(x => x.Cikan, y => y.MapFrom(z => z.FaturaHareketler
 				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Satis).Sum(x => x.Miktar)));
 		CreateMap<CreateHizmetDto, Hizmet>();
@@ -172,9 +172,9 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad))
 			.ForMember(x => x.Borc, y => y.MapFrom(z => z.MakbuzHareketler
-				.Where(x => x.BelgeDurumu==BelgeDurumu.TahsilEdildi).Sum(x => x.Tutar)))
+				.Where(x => x.BelgeDurumu == BelgeDurumu.TahsilEdildi).Sum(x => x.Tutar)))
 			.ForMember(x => x.Alacak, y => y.MapFrom(z => z.MakbuzHareketler
-				.Where(x => x.BelgeDurumu==BelgeDurumu.Odendi).Sum(x => x.Tutar)));
+				.Where(x => x.BelgeDurumu == BelgeDurumu.Odendi).Sum(x => x.Tutar)));
 		CreateMap<CreateKasaDto, Kasa>();
 		CreateMap<UpdateKasaDto, Kasa>();
 

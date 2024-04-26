@@ -772,7 +772,7 @@ public static class OnMuhasebeDbContextModelBuilderExtensions
 
 			b.Property(x => x.BankaToplam)
 				.IsRequired()
-				.HasColumnType(SqlDbType.TinyInt.ToString());
+				.HasColumnType(SqlDbType.Money.ToString());
 
 			b.Property(x => x.OzelKod1Id)
 				.HasColumnType(SqlDbType.UniqueIdentifier.ToString());

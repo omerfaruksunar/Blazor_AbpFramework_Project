@@ -2,7 +2,7 @@
 public class MakbuzHareket : FullAuditedEntity<Guid>
 {
 	public Guid MakbuzId { get; set; }
-	public OdemeTuru OdemeTuru { get; set; }
+	public int OdemeTuru { get; set; }
 	public string TakipNo { get; set; }
 	public Guid? CekBankaId { get; set; }
 	public Guid? CekBankaSubeId { get; set; }

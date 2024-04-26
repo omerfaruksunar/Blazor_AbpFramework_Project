@@ -14,7 +14,7 @@ public class MakbuzManager : DomainService
 	private readonly IDonemRepository _donemRepository;
 	public MakbuzManager(IMakbuzRepository makbuzRepository, ICariRepository cariRepository,
 		IKasaRepository kasaRepository, IOzelKodRepository ozelKodRepository,
-		ISubeRepository subeRepository, IDonemRepository donemRepository)
+		ISubeRepository subeRepository, IDonemRepository donemRepository, IBankaHesapRepository bankaHesapRepository)
 	{
 		_makbuzRepository = makbuzRepository;
 		_cariRepository = cariRepository;
@@ -22,6 +22,7 @@ public class MakbuzManager : DomainService
 		_ozelKodRepository = ozelKodRepository;
 		_subeRepository = subeRepository;
 		_donemRepository = donemRepository;
+		_bankaHesapRepository = bankaHesapRepository;
 	}
 	public async Task CheckCreateAsync(string makbuzNo, MakbuzTuru makbuzTuru, Guid? cariId,
 									   Guid? kasaId, Guid? bankaHesapId, Guid? ozelKod1Id,
@@ -40,12 +41,14 @@ public class MakbuzManager : DomainService
 			KartTuru.Makbuz);
 	}
 	public async Task CheckUpdateAsync(Guid id, string makbuzNo, Makbuz entity,
-		Guid? cariId, Guid? ozelKod1Id, Guid? ozelKod2Id)
+		Guid? cariId, Guid? kasaId, Guid? bankaHesapId, Guid? ozelKod1Id, Guid? ozelKod2Id)
 	{
 		await _makbuzRepository.KodAnyAsync(makbuzNo, x => x.Id != id &&
 			x.MakbuzNo == makbuzNo && x.SubeId == entity.SubeId && x.DonemId == entity.DonemId,
 			entity.MakbuzNo != makbuzNo);
 		await _cariRepository.EntityAnyAsync(cariId, x => x.Id == cariId);
+		await _kasaRepository.EntityAnyAsync(kasaId,x=>x.Id==kasaId);
+		await _bankaHesapRepository.EntityAnyAsync(bankaHesapId,x=>x.Id== bankaHesapId);
 		await _ozelKodRepository.EntityAnyAsync(ozelKod1Id, OzelKodTuru.OzelKod1,
 			KartTuru.Kasa, entity.OzelKod1Id != ozelKod1Id);
 		await _ozelKodRepository.EntityAnyAsync(ozelKod2Id, OzelKodTuru.OzelKod2,

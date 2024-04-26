@@ -28,11 +28,10 @@ public class SelectMakbuzDto : EntityDto<Guid>, IOzelKod
 	public Guid? OzelKod1Id { get; set; }
 	public string OzelKod2Adi { get; set; }
 	public Guid? OzelKod2Id { get; set; }
-	public string SubeAdi { get; set; }
 	public string Aciklama { get; set; }
 	public bool Durum { get; set; }
 	public Guid SubeId { get; set; }
-	public string SubaAdi { get; set; }
+	public string SubeAdi { get; set; }
 	public Guid DonemId { get; set; }
 
 	public List<SelectMakbuzHareketDto> MakbuzHareketler { get; set; }
