@@ -12,6 +12,7 @@ using AbcYazilim.OnMuhasebe.Kasalar;
 using AbcYazilim.OnMuhasebe.MakbuzHareketler;
 using AbcYazilim.OnMuhasebe.Makbuzlar;
 using AbcYazilim.OnMuhasebe.Masraflar;
+using AbcYazilim.OnMuhasebe.OzelKodlar;
 using AutoMapper;
 using System.Linq;
 
@@ -223,5 +224,11 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 
 		CreateMap<CreateMasrafDto, Masraf>();
 		CreateMap<UpdateMasrafDto, Masraf>();
+
+		//Ozel Kod
+		CreateMap<OzelKod, SelectOzelKodDto>();
+		CreateMap<OzelKod, ListOzelKodDto>();
+		CreateMap<CreateOzelKodDto, OzelKod>();
+		CreateMap<UpdateOzelKodDto, OzelKod>();
 	}
 }
