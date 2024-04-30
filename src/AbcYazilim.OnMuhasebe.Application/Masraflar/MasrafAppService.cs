@@ -11,9 +11,10 @@ public class MasrafAppService : OnMuhasebeAppService, IMasrafAppService
 	private readonly IMasrafRepository _masrafRepository;
 	private readonly MasrafManager _masrafManager;
 
-	public MasrafAppService(IMasrafRepository masrafRepository)
+	public MasrafAppService(IMasrafRepository masrafRepository, MasrafManager masrafManager)
 	{
 		_masrafRepository = masrafRepository;
+		_masrafManager = masrafManager;
 	}
 
 	public virtual async Task<SelectMasrafDto> GetAsync(Guid id)

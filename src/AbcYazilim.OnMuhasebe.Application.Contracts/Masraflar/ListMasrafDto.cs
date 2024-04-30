@@ -12,8 +12,7 @@ public class ListMasrafDto : EntityDto<Guid>
 	public string BirimAdi { get; set; }
 	public string OzelKod1Adi { get; set; }
 	public string OzelKod2Adi { get; set; }
-	public string Aciklama { get; set; }
 	public decimal Giren { get; set; }
 	public decimal Cikan { get; set; }
-	public bool Durum { get; set; }
+	public string Aciklama { get; set; }
 }
