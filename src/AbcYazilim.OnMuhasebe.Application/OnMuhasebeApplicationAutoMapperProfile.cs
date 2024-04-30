@@ -13,6 +13,7 @@ using AbcYazilim.OnMuhasebe.MakbuzHareketler;
 using AbcYazilim.OnMuhasebe.Makbuzlar;
 using AbcYazilim.OnMuhasebe.Masraflar;
 using AbcYazilim.OnMuhasebe.OzelKodlar;
+using AbcYazilim.OnMuhasebe.Parametreler;
 using AutoMapper;
 using System.Linq;
 
@@ -230,5 +231,13 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 		CreateMap<OzelKod, ListOzelKodDto>();
 		CreateMap<CreateOzelKodDto, OzelKod>();
 		CreateMap<UpdateOzelKodDto, OzelKod>();
+
+		//Firma Parametre
+		CreateMap<FirmaParametre, SelectFirmaParametreDto>()
+				.ForMember(x => x.SubeAdi, y => y.MapFrom(z => z.Sube.Ad))
+				.ForMember(x => x.DonemAdi, y => y.MapFrom(z => z.Donem.Ad))
+				.ForMember(x => x.DepoAdi, y => y.MapFrom(z => z.Depo.Ad));
+		CreateMap<CreateFirmaParametreDto, FirmaParametre>();
+		CreateMap<UpdateFirmaParametreDto, FirmaParametre>();
 	}
 }
