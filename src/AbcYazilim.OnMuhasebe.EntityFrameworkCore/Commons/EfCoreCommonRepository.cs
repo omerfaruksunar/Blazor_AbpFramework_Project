@@ -74,30 +74,40 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 	}
 
 	public async Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount,
-		Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null,
+		Expression<Func<TEntity, bool>> predicate = null,
+		Expression<Func<TEntity, TKey>> orderBy = null,
 		params Expression<Func<TEntity, object>>[] includeProperties)
 	{
 		var queryable = await WithDetailsAsync(includeProperties);
+
 		if (predicate != null)
 			queryable = queryable.Where(predicate);
+
 		if (orderBy != null)
 			queryable = queryable.OrderBy(orderBy);
+
 		return await queryable
 			.Skip(skipCount)
 			.Take(maxResultCount)
 			.ToListAsync();
 	}
+
 	public async Task<List<TEntity>> GetPagedListAsync<TKey>(int skipCount, int maxResultCount,
-		Expression<Func<TEntity, bool>> predicate = null, Expression<Func<TEntity, TKey>> orderBy = null )
+		Expression<Func<TEntity, bool>> predicate = null,
+		Expression<Func<TEntity, TKey>> orderBy = null)
 	{
 		var queryable = await WithDetailsAsync();
+
 		if (predicate != null)
 			queryable = queryable.Where(predicate);
+
 		if (orderBy != null)
 			queryable = queryable.OrderBy(orderBy);
+
 		return await queryable
 			.Skip(skipCount)
-			.Take(maxResultCount).ToListAsync();
+			.Take(maxResultCount)
+			.ToListAsync();
 	}
 
 	public async Task<List<TEntity>> GetPagedLastListAsync<TKey>(int skipCount, int maxResultCount,
@@ -105,11 +115,14 @@ public class EfCoreCommonRepository<TEntity> : EfCoreRepository<OnMuhasebeDbCont
 		Expression<Func<TEntity, TKey>> orderBy = null,
 		params Expression<Func<TEntity, object>>[] includeProperties)
 	{
-		var queryable = await WithDetailsAsync();
+		var queryable = await WithDetailsAsync(includeProperties);
+
 		if (predicate != null)
 			queryable = queryable.Where(predicate);
+
 		if (orderBy != null)
 			queryable = queryable.OrderByDescending(orderBy);
+
 		return await queryable
 			.Skip(skipCount)
 			.Take(maxResultCount)

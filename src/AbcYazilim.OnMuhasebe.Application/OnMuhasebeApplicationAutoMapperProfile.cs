@@ -14,6 +14,8 @@ using AbcYazilim.OnMuhasebe.Makbuzlar;
 using AbcYazilim.OnMuhasebe.Masraflar;
 using AbcYazilim.OnMuhasebe.OzelKodlar;
 using AbcYazilim.OnMuhasebe.Parametreler;
+using AbcYazilim.OnMuhasebe.Stoklar;
+using AbcYazilim.OnMuhasebe.Subeler;
 using AutoMapper;
 using System.Linq;
 
@@ -239,5 +241,28 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 				.ForMember(x => x.DepoAdi, y => y.MapFrom(z => z.Depo.Ad));
 		CreateMap<CreateFirmaParametreDto, FirmaParametre>();
 		CreateMap<UpdateFirmaParametreDto, FirmaParametre>();
+
+		//Stok
+		CreateMap<Stok, SelectStokDto>()
+				.ForMember(x => x.BirimAdi, y => y.MapFrom(z => z.Birim.Ad))
+				.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+				.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
+		CreateMap<Stok, ListStokDto>()
+			.ForMember(x => x.BirimAdi, y => y.MapFrom(z => z.Birim.Ad))
+			.ForMember(x => x.OzelKod1Adi, y => y.MapFrom(z => z.OzelKod1.Ad))
+			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad))
+			.ForMember(x => x.Giren, y => y.MapFrom(z => z.FaturaHareketler
+				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Alis).Sum(x => x.Miktar)))
+			.ForMember(x => x.Cikan, y => y.MapFrom(z => z.FaturaHareketler
+				.Where(x => x.Fatura.FaturaTuru == FaturaTuru.Satis).Sum(x => x.Miktar)));
+
+		CreateMap<CreateStokDto, Stok>();
+		CreateMap<UpdateStokDto, Stok>();
+
+		//Sube
+		CreateMap<Sube, SelectSubeDto>();
+		CreateMap<Sube, ListSubeDto>();
+		CreateMap<CreateSubeDto, Sube>();
+		CreateMap<UpdateSubeDto, Sube>();
 	}
 }
