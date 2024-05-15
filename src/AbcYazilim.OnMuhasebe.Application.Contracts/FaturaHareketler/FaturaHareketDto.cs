@@ -3,7 +3,7 @@ using System;
 using Volo.Abp.Application.Dtos;
 
 namespace AbcYazilim.OnMuhasebe.FaturaHareketler;
-public class FaturaHareketDto:EntityDto<Guid>
+public class FaturaHareketDto:EntityDto<Guid?>
 {
 	public FaturaHareketTuru? HareketTuru { get; set; }
 	public Guid? StokId { get; set; }
