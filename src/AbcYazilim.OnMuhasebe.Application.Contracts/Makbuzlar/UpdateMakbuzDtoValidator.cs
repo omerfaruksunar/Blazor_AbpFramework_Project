@@ -3,12 +3,11 @@ using AbcYazilim.OnMuhasebe.Localization;
 using AbcYazilim.OnMuhasebe.MakbuzHareketler;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using System;
 
 namespace AbcYazilim.OnMuhasebe.Makbuzlar;
-public class CreateMakbuzDtoValidator : AbstractValidator<CreateMakbuzDto>
+public class UpdateMakbuzDtoValidator : AbstractValidator<UpdateMakbuzDto>
 {
-	public CreateMakbuzDtoValidator(IStringLocalizer<OnMuhasebeResource>localizer)
+	public UpdateMakbuzDtoValidator(IStringLocalizer<OnMuhasebeResource>localizer)
 	{
 		RuleFor(x => x.MakbuzTuru)
 			.IsInEnum()
@@ -45,29 +44,35 @@ public class CreateMakbuzDtoValidator : AbstractValidator<CreateMakbuzDto>
 
 		RuleFor(x => x.CariId)
 			.NotEmpty()
-			.When(x => x.MakbuzTuru == MakbuzTuru.Tahsilat||x.MakbuzTuru==MakbuzTuru.Odeme)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, localizer["Customer"]]);
+			.When(x => x.MakbuzTuru == MakbuzTuru.Tahsilat || x.MakbuzTuru == MakbuzTuru.Odeme)
+			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, 
+			localizer["Customer"]]);
 
 		RuleFor(x => x.CariId)
 			.Empty()
-			.When(x => x.MakbuzTuru != MakbuzTuru.Tahsilat && x.MakbuzTuru == MakbuzTuru.Odeme)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.IsNull, localizer["Customer"]]);
+			.When(x => x.MakbuzTuru != MakbuzTuru.Tahsilat &&
+			 x.MakbuzTuru == MakbuzTuru.Odeme)
+			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.IsNull, 
+			localizer["Customer"]]);
 
 		RuleFor(x => x.BankaHesapId)
 			.NotEmpty()
 			.When(x => x.MakbuzTuru == MakbuzTuru.BankaIslem)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, localizer["BankAccount"]]);
+			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, 
+			 localizer["BankAccount"]]);
 
 		RuleFor(x => x.BankaHesapId)
 			.Empty()
 			.When(x => x.MakbuzTuru != MakbuzTuru.BankaIslem)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.IsNull, localizer["BankAccount"]]);
+			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.IsNull, 
+			 localizer["BankAccount"]]);
 
 		RuleFor(x => x.HareketSayisi)
 			.NotNull()
 			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required,
 			 localizer["NumberOfTransactions"]])
-			.GreaterThanOrEqualTo(0).WithMessage(localizer[OnMuhasebeDomainErrorCodes.GreaterThanOrEqual,
+			.GreaterThanOrEqualTo(0)
+			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.GreaterThanOrEqual,
 			 localizer["NumberOfTransactions"], localizer["ToZero"], localizer["ThanZero"]]);
 
 		RuleFor(x => x.CekToplam)
@@ -104,14 +109,6 @@ public class CreateMakbuzDtoValidator : AbstractValidator<CreateMakbuzDto>
 			 localizer["BankTotal"]])
 			.GreaterThanOrEqualTo(0).WithMessage(localizer[OnMuhasebeDomainErrorCodes.GreaterThanOrEqual,
 			 localizer["BankTotal"], localizer["ToZero"], localizer["ThanZero"]]);
-
-		RuleFor(x => x.SubeId)
-			.Must(x => x.HasValue && x.Value != Guid.Empty)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, localizer["Branch"]]);
-
-		RuleFor(x => x.DonemId)
-			.Must(x => x.HasValue && x.Value != Guid.Empty)
-			.WithMessage(localizer[OnMuhasebeDomainErrorCodes.Required, localizer["Period"]]);
 
 		RuleFor(x => x.Aciklama)
 			.MaximumLength(EntityConsts.MaxAciklamaLength)

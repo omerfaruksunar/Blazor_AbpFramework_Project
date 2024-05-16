@@ -200,6 +200,7 @@ public class OnMuhasebeApplicationAutoMapperProfile : Profile
 			.ForMember(x => x.OzelKod2Adi, y => y.MapFrom(z => z.OzelKod2.Ad));
 		CreateMap<CreateMakbuzDto, Makbuz>();
 		CreateMap<UpdateMakbuzDto, Makbuz>()
+			.ForMember(x => x.MakbuzTuru, y => y.Ignore())
 			.ForMember(x => x.MakbuzHareketler, y => y.Ignore());
 
 		//Makbuz Hareket
